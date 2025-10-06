@@ -156,14 +156,13 @@ if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
 
-    def run_bot():
-        loop.run_until_complete(main())
+    async def runner():
+        await main()
+        # blockiere dauerhaft, damit Render aktiv bleibt
+        while True:
+            await asyncio.sleep(3600)
 
-    # Flask separat starten
-    threading.Thread(target=start_simple_webserver, daemon=True).start()
-
-    # Telegram-Bot starten
     try:
-        run_bot()
+        loop.run_until_complete(runner())
     except (KeyboardInterrupt, SystemExit):
         logging.info("🛑 Bot stopped manually.")
