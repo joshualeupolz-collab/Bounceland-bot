@@ -9,7 +9,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 # Telegram Token & Chat-ID
 # -----------------------------
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-CHAT_ID = int(os.environ.get("CHAT_ID"))
+CHAT_ID = int(os.environ.get("CHAT_ID"))  # Private Chat oder Gruppe
 
 # -----------------------------
 # Flask Webserver für Render
@@ -24,6 +24,7 @@ def home():
 # Telegram Handler
 # -----------------------------
 async def postnow(update: ContextTypes.DEFAULT_TYPE):
+    # sendet Nachricht an den Chat, in dem der Befehl abgesetzt wurde
     await update.message.reply_text("📊 Test Nachricht: /postnow funktioniert!")
 
 # -----------------------------
@@ -47,7 +48,7 @@ def start_bot_thread():
     asyncio.run(run_bot())
 
 # -----------------------------
-# Hauptstartpunkt
+# Hauptstartpunkt für Render
 # -----------------------------
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -55,5 +56,5 @@ if __name__ == "__main__":
     # Bot im Hintergrund starten
     threading.Thread(target=start_bot_thread, daemon=True).start()
 
-    # Flask im Vordergrund laufen lassen (Render braucht offenen Port)
+    # Flask im Vordergrund laufen lassen (Render benötigt offenen Port)
     app.run(host="0.0.0.0", port=10000)
