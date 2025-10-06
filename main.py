@@ -8,8 +8,8 @@ from telegram.ext import ApplicationBuilder, CallbackQueryHandler, CommandHandle
 # -----------------------------------------------------
 # Konfiguration
 # -----------------------------------------------------
-BOT_TOKEN = "DEIN_TELEGRAM_BOT_TOKEN"
-CHAT_ID = "DEINE_CHAT_ID"
+BOT_TOKEN = "8462904785:AAEpAT43bmCj1uWpYxmFdyaaWm4tul9f-5Y"
+CHAT_ID = "-1002317320028"
 
 # -----------------------------------------------------
 # Flask Webserver für Render
