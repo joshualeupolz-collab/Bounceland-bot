@@ -151,10 +151,19 @@ async def main():
     await application.run_polling()
 
 if __name__ == "__main__":
+    import nest_asyncio
+    nest_asyncio.apply()  # erlaubt paralleles Flask + Telegram
+
+    loop = asyncio.get_event_loop()
+
+    def run_bot():
+        loop.run_until_complete(main())
+
+    # Flask separat starten
+    threading.Thread(target=start_simple_webserver, daemon=True).start()
+
+    # Telegram-Bot starten
     try:
-        asyncio.get_event_loop().run_until_complete(main())
-    except RuntimeError:
-        # Wenn der Loop schon läuft (z. B. in Render oder Replit)
-        loop = asyncio.get_event_loop()
-        loop.create_task(main())
-        loop.run_forever()
+        run_bot()
+    except (KeyboardInterrupt, SystemExit):
+        logging.info("🛑 Bot stopped manually.")
